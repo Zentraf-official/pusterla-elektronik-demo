@@ -107,6 +107,13 @@ li { margin-bottom: .35em; }
   position: absolute; width: 1px; height: 1px; overflow: hidden;
   clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
 }
+/* Los campos que van dentro (la trampa anti-spam) no deben medir más que su
+   caja de 1 px: así no asoma nada fuera de la pantalla en el móvil. */
+.visualmente-oculto input,
+.visualmente-oculto label {
+  width: 1px; min-width: 0; height: 1px; min-height: 0;
+  margin: 0; padding: 0; border: 0;
+}
 
 /* ---------------------------------------------------------------- botones */
 .boton {
