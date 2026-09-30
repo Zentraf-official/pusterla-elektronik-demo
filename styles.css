@@ -353,10 +353,15 @@ li { margin-bottom: .35em; }
 }
 
 /* ---------------------------------------------------------------- fotos tienda */
-.fotos-tienda { display: grid; gap: 18px; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); align-items: start; }
+.fotos-tienda { display: grid; gap: 18px; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: start; }
 .foto-marco { margin: 0; }
 .foto-marco img { width: 100%; border-radius: var(--radio); border: 1px solid var(--borde); }
 .foto-marco figcaption { margin-top: 8px; font-size: .88rem; color: var(--texto-suave); }
+/* Las fotos del cliente NO se estiran: cada una se queda como máximo en el ancho
+   que tiene el archivo original. (ladenlokal_gross.jpg mide 927 px de ancho y
+   Pusterla-2.jpg mide 600 px.) */
+.foto-marco--gross img { max-width: 900px; }
+.foto-marco--klein img { max-width: 600px; }
 
 /* ---------------------------------------------------------------- contacto */
 .contacto__rejilla {
