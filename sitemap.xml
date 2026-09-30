@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Pusterla Elektronik AG — Entwurf/Vorschau von Zentraf, Stand 30.09.2026.
+     Drei Seiten, eine Sprache (Deutsch). Beim Umzug auf die endgueltige Domain
+     werden die loc-Adressen ersetzt und die Datei bei der Google Search Console
+     angemeldet. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://zentraf-official.github.io/pusterla-elektronik-demo/</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://zentraf-official.github.io/pusterla-elektronik-demo/impressum.html</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://zentraf-official.github.io/pusterla-elektronik-demo/datenschutz.html</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+</urlset>

@@ -1,0 +1,493 @@
+/* ============================================================================
+   Pusterla Elektronik AG — Vorschau/Demo von Zentraf
+   Colores y tipografía: TODOS de la marca del cliente, medidos en su propia web
+   (ver logos/MARCA-Y-PALETA.md). Ningún color de Zentraf.
+   Sin librerías externas: CSS propio, tipografía servida desde este servidor.
+   ========================================================================= */
+
+/* ---------------------------------------------------------------- tipografía */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('assets/fuentes/inter-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('assets/fuentes/inter-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('assets/fuentes/inter-800.woff2') format('woff2');
+}
+
+/* ---------------------------------------------------------------- variables */
+:root {
+  /* color principal de marca, tal como está en el CSS del cliente */
+  --azul: #10415a;
+  --azul-claro: #1b5572;
+  --azul-oscuro: #08222f;
+  --azul-hover: #041219;
+  --texto: #333333;
+  --texto-suave: #55666f;
+  --gris: #e0e0e0;
+  --borde: #e7e7e7;
+  --fondo-suave: #f4f7f9;
+  --blanco: #ffffff;
+
+  --ancho: 1180px;
+  --radio: 8px;
+  --sombra: 0 1px 2px rgba(16, 65, 90, .06), 0 8px 24px rgba(16, 65, 90, .06);
+}
+
+/* ---------------------------------------------------------------- base */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  /* el alto de la cabecera pegajosa, para que los saltos no queden tapados */
+  scroll-padding-top: 96px;
+}
+
+body {
+  margin: 0;
+  background: var(--blanco);
+  color: var(--texto);
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 18px;          /* nunca por debajo de 16 px */
+  line-height: 1.6;
+  font-weight: 400;
+  overflow-x: hidden;       /* red de seguridad contra el scroll horizontal */
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+a { color: var(--azul); text-underline-offset: 3px; }
+a:hover { color: var(--azul-hover); }
+
+h1, h2, h3, h4 { line-height: 1.2; margin: 0 0 .5em; font-weight: 700; color: #12242c; }
+h1 { font-size: clamp(1.9rem, 1.1rem + 2.6vw, 3.1rem); font-weight: 800; letter-spacing: -.02em; }
+h2 { font-size: clamp(1.5rem, 1rem + 1.6vw, 2.15rem); font-weight: 800; letter-spacing: -.015em; }
+h3 { font-size: 1.15rem; font-weight: 600; }
+p { margin: 0 0 1em; }
+ul { margin: 0 0 1em; padding-left: 1.15em; }
+li { margin-bottom: .35em; }
+
+:focus-visible {
+  outline: 3px solid var(--azul);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* ---------------------------------------------------------------- utilidades */
+.contenedor { width: 100%; max-width: var(--ancho); margin: 0 auto; padding: 0 20px; }
+.seccion { padding: 64px 0; }
+.seccion--suave { background: var(--fondo-suave); }
+.seccion--oscura { background: var(--azul); color: #eaf1f5; }
+.seccion--oscura h2, .seccion--oscura h3 { color: #fff; }
+.seccion__cabecera { max-width: 800px; margin-bottom: 36px; }
+.seccion__cabecera p { font-size: 1.05rem; color: var(--texto-suave); }
+.seccion--oscura .seccion__cabecera p { color: #c6d7e0; }
+
+.saltar {
+  position: absolute; left: -9999px; top: 0; z-index: 100;
+  background: #fff; color: var(--azul); padding: 12px 18px; font-weight: 600;
+}
+.saltar:focus { left: 8px; top: 8px; }
+
+.visualmente-oculto {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------- botones */
+.boton {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 48px; padding: 12px 22px;
+  font: inherit; font-weight: 600; line-height: 1.2; text-align: center;
+  text-decoration: none; cursor: pointer;
+  border: 2px solid var(--azul); border-radius: 6px;
+  background: var(--azul); color: #fff;
+  transition: background-color .18s ease, border-color .18s ease, color .18s ease;
+}
+.boton:hover { background: var(--azul-oscuro); border-color: var(--azul-oscuro); color: #fff; }
+.boton--claro { background: transparent; color: var(--azul); }
+.boton--claro:hover { background: var(--azul); color: #fff; }
+.boton--sobre-oscuro { background: #fff; border-color: #fff; color: var(--azul); }
+.boton--sobre-oscuro:hover { background: #d9e6ec; border-color: #d9e6ec; color: var(--azul-oscuro); }
+.boton--linea-clara { background: transparent; border-color: #7fa0b1; color: #fff; }
+.boton--linea-clara:hover { background: #fff; border-color: #fff; color: var(--azul); }
+
+.fila-botones { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* Enlaces de texto: se les da altura suficiente para poder tocarlos con el dedo
+   (la norma de la casa: 40x24 px como mínimo en el móvil). */
+.barra a, .migas a, .pie a, .datos a, .formulario__aviso a, .legal a, .buscador__nota a,
+.seccion p a, .legal p a, .formulario__respuesta a {
+  display: inline-block;
+  min-height: 24px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+/* ---------------------------------------------------------------- barra superior */
+.barra {
+  background: var(--azul-oscuro);
+  color: #d5e3ea;
+  font-size: .9rem;
+}
+.barra__interior {
+  display: flex; flex-wrap: wrap; gap: 6px 22px;
+  align-items: center; justify-content: space-between;
+  max-width: var(--ancho); margin: 0 auto; padding: 8px 20px;
+}
+.barra a { color: #fff; text-decoration: none; white-space: nowrap; }
+.barra a:hover { text-decoration: underline; color: #fff; }
+.barra__dato { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
+.barra__horas { display: inline-flex; align-items: center; gap: 7px; }
+.barra__punto { color: #7fa0b1; }
+
+/* ---------------------------------------------------------------- cabecera */
+.cabecera {
+  position: sticky; top: 0; z-index: 50;
+  background: #fff;
+  border-bottom: 1px solid var(--borde);
+}
+.cabecera__interior {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 12px; max-width: var(--ancho); margin: 0 auto; padding: 14px 20px;
+}
+.cabecera__marca { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+.cabecera__logo { width: 232px; max-width: 60vw; }
+.cabecera__lema {
+  margin: 0; padding-left: 14px; border-left: 1px solid var(--borde);
+  font-size: .84rem; color: var(--texto-suave); line-height: 1.35;
+}
+.cabecera__acciones { display: flex; align-items: center; gap: 12px; }
+.cabecera__tel {
+  display: inline-flex; flex-direction: column; align-items: flex-end;
+  text-decoration: none; color: var(--azul); font-weight: 700; line-height: 1.15;
+}
+.cabecera__tel small { font-weight: 400; font-size: .78rem; color: var(--texto-suave); }
+
+.nav { border-top: 1px solid var(--borde); background: #fff; }
+.nav__lista {
+  display: flex; flex-wrap: wrap; gap: 4px 6px;
+  max-width: var(--ancho); margin: 0 auto; padding: 8px 20px;
+  list-style: none;
+}
+.nav__lista li { margin: 0; }
+.nav__enlace {
+  display: inline-block; padding: 9px 12px;
+  border-radius: 6px; text-decoration: none;
+  color: #23343d; font-weight: 600; font-size: .96rem;
+}
+.nav__enlace:hover { background: var(--fondo-suave); color: var(--azul); }
+
+/* ---------------------------------------------------------------- héroe */
+.heroe {
+  position: relative;
+  background: linear-gradient(180deg, var(--azul-claro) 0%, var(--azul) 100%);
+  color: #fff;
+  overflow: hidden;
+}
+.heroe::before {
+  /* la placa de circuito de SU propia cabecera, como textura de fondo */
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url('assets/fotos/platine-650.jpg');
+  background-repeat: repeat;
+  background-position: center top;
+  opacity: .11;
+}
+.heroe::after {
+  /* velo para que el texto de la izquierda se lea con calma y la textura
+     se quede solo al fondo, a la derecha */
+  content: '';
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background: linear-gradient(97deg,
+    rgba(9, 38, 52, .88) 0%,
+    rgba(9, 38, 52, .62) 45%,
+    rgba(9, 38, 52, .28) 100%);
+}
+.heroe__interior { position: relative; z-index: 1; padding: 60px 0 56px; }
+.heroe__rejilla {
+  display: grid; gap: 40px;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+  align-items: center;
+}
+.heroe h1 { color: #fff; margin-bottom: .35em; }
+.heroe__entrada { font-size: 1.12rem; color: #dbe8ee; max-width: 46ch; }
+.heroe__entrada strong { color: #fff; }
+
+.cifras {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px; margin: 30px 0 0; padding: 0; list-style: none;
+}
+.cifras li {
+  margin: 0; padding: 14px 16px;
+  background: rgba(255, 255, 255, .07);
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: var(--radio);
+}
+.cifras b { display: block; font-size: 1.5rem; font-weight: 800; color: #fff; line-height: 1.15; }
+.cifras span { font-size: .9rem; color: #c6d7e0; }
+
+.cita {
+  margin: 0; padding: 26px 26px 24px;
+  background: #fff; color: var(--texto);
+  border-radius: var(--radio); box-shadow: var(--sombra);
+  border-top: 4px solid var(--azul);
+}
+.cita blockquote { margin: 0 0 14px; font-size: 1.08rem; line-height: 1.55; }
+.cita blockquote::before { content: '«'; }
+.cita blockquote::after { content: '»'; }
+.cita figcaption { font-size: .88rem; color: var(--texto-suave); }
+.cita__estrellas { color: var(--azul); font-weight: 700; }
+
+/* ---------------------------------------------------------------- servicios */
+.rejilla { display: grid; gap: 18px; }
+.rejilla--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.rejilla--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.rejilla--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.tarjeta {
+  background: #fff;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 22px;
+}
+.tarjeta h3 { margin-bottom: .35em; color: var(--azul); }
+.tarjeta p { margin: 0; font-size: .96rem; color: var(--texto-suave); }
+.tarjeta__num {
+  display: block; margin-bottom: 10px;
+  font-size: .8rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: #7c8f99;
+}
+
+/* ---------------------------------------------------------------- sortiment + busca */
+.sortiment__rejilla {
+  display: grid; gap: 34px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+}
+.buscador {
+  background: #fff; border: 1px solid var(--borde);
+  border-radius: var(--radio); padding: 24px; box-shadow: var(--sombra);
+}
+.buscador label { display: block; font-weight: 600; margin-bottom: 8px; }
+.buscador__fila { display: flex; flex-wrap: wrap; gap: 10px; }
+.buscador input[type="search"] {
+  flex: 1 1 220px; min-width: 0; min-height: 48px;
+  padding: 12px 14px; font: inherit; color: var(--texto);
+  border: 2px solid var(--gris); border-radius: 6px; background: #fff;
+}
+.buscador input[type="search"]:focus { border-color: var(--azul); outline: none; }
+.buscador__nota { margin: 14px 0 0; font-size: .88rem; color: var(--texto-suave); }
+
+.etiquetas { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.etiquetas li { margin: 0; }
+.etiquetas a {
+  display: inline-block; padding: 9px 14px;
+  border: 1px solid var(--borde); border-radius: 100px;
+  background: #fff; color: var(--azul);
+  font-size: .92rem; font-weight: 600; text-decoration: none;
+}
+.etiquetas a:hover { background: var(--azul); border-color: var(--azul); color: #fff; }
+
+/* ---------------------------------------------------------------- productos */
+.productos { display: grid; gap: 16px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.producto {
+  margin: 0; background: #fff;
+  border: 1px solid var(--borde); border-radius: var(--radio); overflow: hidden;
+}
+.producto img { width: 100%; height: auto; background: var(--fondo-suave); }
+.producto figcaption {
+  padding: 12px 14px; font-size: .92rem; font-weight: 600; color: var(--azul);
+  border-top: 1px solid var(--borde);
+}
+
+/* ---------------------------------------------------------------- reparaciones */
+.destacado {
+  background: var(--azul); color: #fff;
+  border-radius: var(--radio); padding: 28px;
+}
+.destacado blockquote { margin: 0; font-size: 1.05rem; line-height: 1.6; }
+.destacado figcaption { margin-top: 14px; font-size: .88rem; color: #c6d7e0; }
+.lista-marcada { list-style: none; padding: 0; margin: 0; }
+.lista-marcada li {
+  position: relative; padding-left: 30px; margin-bottom: 12px;
+}
+.lista-marcada li::before {
+  content: ''; position: absolute; left: 0; top: .45em;
+  width: 12px; height: 12px; border-radius: 3px;
+  background: var(--azul);
+}
+.seccion--oscura .lista-marcada li::before { background: #7fb0c8; }
+
+/* ---------------------------------------------------------------- marcas */
+.marcas {
+  display: grid; gap: 10px; margin: 0; padding: 0; list-style: none;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+}
+.marcas li {
+  margin: 0; padding: 14px 12px;
+  background: #fff; border: 1px solid var(--borde); border-radius: 6px;
+  text-align: center; font-weight: 600; color: #23343d;
+}
+
+/* ---------------------------------------------------------------- fotos tienda */
+.fotos-tienda { display: grid; gap: 18px; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); align-items: start; }
+.foto-marco { margin: 0; }
+.foto-marco img { width: 100%; border-radius: var(--radio); border: 1px solid var(--borde); }
+.foto-marco figcaption { margin-top: 8px; font-size: .88rem; color: var(--texto-suave); }
+
+/* ---------------------------------------------------------------- contacto */
+.contacto__rejilla {
+  display: grid; gap: 34px;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  align-items: start;
+}
+.datos { list-style: none; margin: 0 0 24px; padding: 0; }
+.datos li { margin-bottom: 16px; }
+.datos b { display: block; font-size: .82rem; letter-spacing: .07em; text-transform: uppercase; color: #7c8f99; font-weight: 700; }
+.datos a { font-size: 1.08rem; font-weight: 600; text-decoration: none; }
+.datos a:hover { text-decoration: underline; }
+
+.horario { width: 100%; border-collapse: collapse; font-size: .96rem; }
+.horario th, .horario td { text-align: left; padding: 8px 0; border-bottom: 1px solid var(--gris); }
+.horario th { font-weight: 600; color: #23343d; }
+
+.formulario { background: #fff; border: 1px solid var(--borde); border-radius: var(--radio); padding: 24px; }
+.formulario__aviso {
+  margin: 0 0 20px; padding: 14px 16px;
+  background: #fdf6e3; border: 1px solid #e8d9a8; border-left: 5px solid #b8942a;
+  border-radius: 6px; font-size: .92rem; color: #4a3d12;
+}
+.campo { margin-bottom: 16px; }
+.campo label { display: block; font-weight: 600; margin-bottom: 6px; font-size: .96rem; }
+.campo input, .campo select, .campo textarea {
+  width: 100%; min-height: 48px; padding: 12px 14px;
+  font: inherit; color: var(--texto);
+  border: 2px solid var(--gris); border-radius: 6px; background: #fff;
+}
+.campo textarea { min-height: 140px; resize: vertical; }
+.campo input:focus, .campo select:focus, .campo textarea:focus { border-color: var(--azul); outline: none; }
+.campo--casilla { display: flex; gap: 10px; align-items: flex-start; }
+.campo--casilla input { width: 22px; height: 22px; min-height: 0; margin-top: 2px; flex: none; }
+.campo--casilla label { font-weight: 400; font-size: .9rem; margin: 0; color: var(--texto-suave); }
+.formulario__respuesta { margin: 16px 0 0; padding: 14px 16px; border-radius: 6px; background: var(--fondo-suave); font-size: .95rem; }
+.formulario__respuesta[hidden] { display: none; }
+
+/* ---------------------------------------------------------------- pie */
+.pie { background: var(--azul-oscuro); color: #c6d7e0; font-size: .94rem; }
+.pie__rejilla {
+  display: grid; gap: 28px; padding: 48px 0 32px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.pie h2, .pie h3 { color: #fff; font-size: 1rem; margin-bottom: 12px; }
+.pie ul { list-style: none; margin: 0; padding: 0; }
+.pie li { margin-bottom: 8px; }
+.pie a { color: #dbe8ee; text-decoration: none; }
+.pie a:hover { color: #fff; text-decoration: underline; }
+.pie__logo { width: 220px; max-width: 100%; margin-bottom: 14px; }
+.pie__legal {
+  border-top: 1px solid rgba(255, 255, 255, .16);
+  padding: 20px 0 32px; font-size: .84rem; color: #9fb6c1;
+}
+.pie__legal p { margin: 0 0 8px; }
+.pie__aviso {
+  border-top: 1px solid rgba(255, 255, 255, .16);
+  background: rgba(0, 0, 0, .18);
+}
+.pie__aviso p {
+  max-width: var(--ancho); margin: 0 auto; padding: 14px 20px;
+  font-size: .82rem; color: #b9cbd5;
+}
+
+/* ---------------------------------------------------------------- páginas legales */
+.legal { max-width: 820px; }
+.legal h2 { margin-top: 1.6em; font-size: 1.3rem; }
+.legal h2:first-of-type { margin-top: 0; }
+.legal dl { margin: 0 0 1.4em; }
+.legal dt { font-weight: 600; color: #23343d; margin-top: 12px; }
+.legal dd { margin: 2px 0 0; }
+.legal__falta {
+  margin: 28px 0 0; padding: 18px 20px;
+  background: var(--fondo-suave); border-left: 5px solid var(--azul); border-radius: 6px;
+}
+.legal__falta h2 { margin-top: 0; font-size: 1.05rem; }
+.legal__falta ul { margin-bottom: 0; }
+
+.migas { padding: 18px 0 0; font-size: .88rem; color: var(--texto-suave); }
+.migas a { text-decoration: none; }
+.migas a:hover { text-decoration: underline; }
+
+/* ---------------------------------------------------------------- animaciones */
+/* Nada se mueve solo. Lo único que se anima es la aparición de un bloque cuando
+   el usuario baja, y SOLO si hay JavaScript (la clase .js la pone el script del
+   <head>). Sin JavaScript, todo se ve desde el primer segundo. */
+.revelar { opacity: 1; }
+
+.js .revelar { opacity: 0; transform: translateY(16px); }
+.js .revelar.esta-visible {
+  opacity: 1; transform: none;
+  transition: opacity .5s ease, transform .5s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .revelar { opacity: 1 !important; transform: none !important; }
+  .js .revelar.esta-visible { transition: none !important; }
+  * { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+}
+
+/* ---------------------------------------------------------------- responsive */
+@media (max-width: 1000px) {
+  .heroe__rejilla, .sortiment__rejilla, .contacto__rejilla { grid-template-columns: minmax(0, 1fr); }
+  .rejilla--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rejilla--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .productos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pie__rejilla { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fotos-tienda { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 17px; }
+  .seccion { padding: 46px 0; }
+  .heroe__interior { padding: 40px 0 42px; }
+  .barra { font-size: .82rem; }
+  .barra__interior { gap: 2px 14px; padding: 7px 20px; }
+  .barra__horas { display: none; }          /* en móvil: dirección y teléfono, nada más */
+  .cabecera__interior { padding: 12px 20px; gap: 10px; }
+  .cabecera__logo { width: 190px; }
+  .cabecera__lema { display: none; }
+  .cabecera__acciones { width: 100%; justify-content: space-between; }
+  .cabecera__acciones .boton { width: auto; min-height: 44px; padding: 10px 18px; }
+  .cabecera__tel { align-items: flex-start; white-space: nowrap; }
+  .nav__lista { padding: 6px 14px; gap: 2px 4px; }
+  .nav__enlace { padding: 8px 10px; font-size: .92rem; }
+  .rejilla--2, .rejilla--3, .rejilla--4, .productos, .cifras { grid-template-columns: minmax(0, 1fr); }
+  .pie__rejilla { grid-template-columns: minmax(0, 1fr); }
+  .boton { width: 100%; }
+  .fila-botones { flex-direction: column; }
+  .barra__interior { justify-content: flex-start; }
+}
+
+/* ---------------------------------------------------------------- impresión */
+@media print {
+  .cabecera, .barra, .pie__aviso, .boton { display: none; }
+  body { font-size: 12pt; color: #000; }
+  .heroe { background: #fff; color: #000; }
+  .heroe h1, .heroe__entrada { color: #000; }
+  .heroe::before { display: none; }
+}

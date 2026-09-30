@@ -1,0 +1,18 @@
+# ---------------------------------------------------------------------------
+# Pusterla Elektronik AG — ENTWURF / VORSCHAU von Zentraf (Stand 30.09.2026)
+#
+# Diese Vorschau ist NICHT fuer Suchmaschinen bestimmt: sie ist ein Entwurf,
+# den der Kunde zuerst sehen soll. Deshalb steht hier alles auf "Disallow".
+#
+# Beim Umzug auf die endgueltige Domain:
+#   1. die beiden Disallow-Zeilen unten entfernen,
+#   2. in jeder HTML-Seite  <meta name="robots" content="noindex, nofollow">
+#      ebenfalls entfernen,
+#   3. die neue sitemap.xml bei der Google Search Console anmelden.
+# Die sitemap.xml liegt hier bereits fertig bereit.
+# ---------------------------------------------------------------------------
+
+User-agent: *
+Disallow: /
+
+Sitemap: https://zentraf-official.github.io/pusterla-elektronik-demo/sitemap.xml
